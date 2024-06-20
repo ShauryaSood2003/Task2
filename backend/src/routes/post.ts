@@ -70,7 +70,8 @@ router.get("/posts/:id", async (req, res) => {
       },
       include: {
         author: true,
-        likes:true
+        likes:true,
+        comments:true
       },
     });
 
@@ -122,7 +123,7 @@ router.delete("/posts/:id", async (req, res) => {
         id: parseInt(id),
       },
     });
-    
+
     res.status(204).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.log("Error:", error);
@@ -156,8 +157,10 @@ router.post("/posts/:id/like", async (req, res) => {
 router.post("/posts/:id/comments", async (req, res) => {
     try {
       const postId = parseInt(req.params.id);
+      
       const data = commentSchema.safeParse({ ...req.body, postId });
-  
+      console.log(data);
+      
       if (!data.success) {
         res.status(400).json({ message: "Invalid data" });
         return;
