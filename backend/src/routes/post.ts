@@ -9,6 +9,7 @@ const router = Router();
 const postSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+  link:z.string(),
   authorId: z.number(),
 });
 
@@ -21,7 +22,10 @@ const commentSchema = z.object({
 // Create a new post
 router.post("/add", async (req, res) => {
   try {
-    const data = postSchema.safeParse(req.body);
+   
+    const data:any = postSchema.safeParse(req.body);
+    console.log(data.data);
+    
     if (!data.success) {
       res.status(400).json({ message: "Invalid data" });
       return;
@@ -30,6 +34,8 @@ router.post("/add", async (req, res) => {
     const post = await prisma.post.create({
       data: data.data,
     });
+    console.log(post);
+    
 
     res.status(200).json(post);
   } catch (error) {
@@ -64,6 +70,7 @@ router.get("/posts/:id", async (req, res) => {
       },
       include: {
         author: true,
+        likes:true
       },
     });
 
@@ -71,6 +78,8 @@ router.get("/posts/:id", async (req, res) => {
       res.status(404).json({ message: "Post not found" });
       return;
     }
+    console.log(post);
+    
 
     res.status(200).json(post);
   } catch (error) {
@@ -113,7 +122,7 @@ router.delete("/posts/:id", async (req, res) => {
         id: parseInt(id),
       },
     });
-
+    
     res.status(204).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.log("Error:", error);

@@ -11,6 +11,7 @@ interface PostsInterface {
     title:string,
     content:string,
     createdAt:Date,
+    link:string,
     author:{
         username:string
     },
@@ -52,7 +53,7 @@ const Posts=()=>{
                     <NavBar to="/"></NavBar>
                     <hr></hr>
                     {
-                        posts.map((post)=><Card key={post.id} id={post.id} title={post.title} content={post.content} name={post.author.username}  createdAt={post.createdAt}></Card>)
+                        posts.map((post)=><Card key={post.id} id={post.id} title={post.title} content={post.content} name={post.author.username} link={post.link}  createdAt={post.createdAt}></Card>)
                     }
                 </div>
             }

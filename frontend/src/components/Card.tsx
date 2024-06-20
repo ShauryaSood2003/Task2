@@ -6,9 +6,10 @@ interface CardInterface {
     content:string,
     name:string,
     id:number,
-    createdAt:Date
+    createdAt:Date,
+    link:string
 }
-const Card=({title,content,name,id,createdAt}:CardInterface)=>{
+const Card=({title,content,name,id,createdAt,link}:CardInterface)=>{
     const navigate =useNavigate();
     console.log(id);
     
@@ -40,7 +41,9 @@ const Card=({title,content,name,id,createdAt}:CardInterface)=>{
                     }
                 </div>
             </div>
-          
+            <div className="hidden md:block">
+                <img className=" w-44 h-44 rounded-md" src={link}></img>
+            </div>
         </div>
     )
 }
