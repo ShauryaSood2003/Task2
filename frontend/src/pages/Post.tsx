@@ -62,23 +62,24 @@ const Post = () => {
     }
   }, [id]);
 
-  async function handleDelete() {
-    try {
-      const ans = window.confirm("Sure Want to delete?");
-      if (ans) {
-        await axios({
-          url: `${BackendUrl}/post/posts/${id}`,
-          method: "DELETE",
-          headers: {
-            "Authorization": localStorage.getItem("id")
-          }
-        });
-        navigate("/posts");
-      }
-    } catch (e) {
-      alert("Failed to delete post try again!");
+  async function handleDelete(){
+    try{
+        const ans=prompt("Sure Want to delete?y/n");
+        if(ans=="y")
+        {
+            await axios({
+                url:`${BackendUrl}/post/posts/${id}`,
+                method:"DELETE",
+                headers:{
+                    "Authorization":localStorage.getItem("id")
+                }
+            });
+            navigate("/posts");
+        }
+    }catch(e){
+        alert("Failed to delete post try again!");
     }
-  }
+}
 
   async function handleCommentSubmit(e:any) {
     e.preventDefault();

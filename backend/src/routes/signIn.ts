@@ -23,7 +23,7 @@ const resetPasswordSchema = z.object({
 
 const newPasswordSchema = z.object({
     token: z.number(),
-    id:z.number(),
+    email:z.string().email(),
     password: z.string().min(4).max(10)
 });
 
@@ -136,6 +136,8 @@ router.post("/newpassword", async (req, res) => {
             res.status(411).json({ message: "Invalid Data" });
             return;
         }
+        console.log(data);
+        
   
         // match the token here 
 
@@ -143,7 +145,7 @@ router.post("/newpassword", async (req, res) => {
 
         await prisma.user.update({
             where: {
-                id:data.data.id
+                email:data.data.email
             },
             data: {
                 password: hashed

@@ -14,6 +14,7 @@ const ResetPassword=()=>{
     function handelClick(){
         //here send the email to user
         console.log(email);
+        localStorage.setItem("email",email);
         navivgate("/newPassword");
     }
 

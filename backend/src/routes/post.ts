@@ -117,12 +117,29 @@ router.put("/posts/:id", async (req, res) => {
 router.delete("/posts/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
 
+    await prisma.like.deleteMany({
+      where: {
+        postId: parseInt(id),
+      },
+    });
+
+    // Delete comments associated with the post
+    await prisma.comment.deleteMany({
+      where: {
+        postId: parseInt(id),
+      },
+    });
+
+    // Delete the post
+    
     await prisma.post.delete({
       where: {
         id: parseInt(id),
       },
     });
+
 
     res.status(204).json({ message: "Post deleted successfully" });
   } catch (error) {

@@ -19,7 +19,7 @@ const NewPassword=()=>{
         try{
             const data={
                 token:Number(token),
-                id:Number(localStorage.getItem("id")),
+                email:localStorage.getItem("email"),
                 password
             }
             console.log(data,`${BackendUrl}/auth/newpassword`);
@@ -31,10 +31,11 @@ const NewPassword=()=>{
             })
             localStorage.setItem("id",res.data.id);
             localStorage.setItem("name",res.data.username);
+            localStorage.removeItem("email");
             navivgate("/signin");
         }catch(e){
             console.log(e);
-            alert("Failed to Sign Up try again!")
+            alert("Failed to Reset try again!")
             
         }
     }
